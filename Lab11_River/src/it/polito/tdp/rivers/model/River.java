@@ -1,6 +1,7 @@
 package it.polito.tdp.rivers.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class River {
@@ -34,8 +35,9 @@ public class River {
 		this.name = name;
 	}
 
-	public void setFlows(List<Flow> flows) {
-		this.flows = flows;
+	public void setFlows(List<Flow> f) {
+		Collections.sort(f, new ComparatoreFlowPerData());
+		this.flows = f;
 	}
 
 	public List<Flow> getFlows() {
@@ -44,6 +46,18 @@ public class River {
 		return flows;
 	}
 
+	public int getNumberFlows(){
+		return flows.size();
+	}
+	
+	public double getAvgFlows(){
+		double avg = 0;
+		for(Flow f:flows)
+			avg += f.getFlow();
+		avg = avg/this.getNumberFlows();
+		return avg;
+	}
+	
 	@Override
 	public String toString() {
 		return name;
@@ -70,4 +84,5 @@ public class River {
 			return false;
 		return true;
 	}
+	
 }
